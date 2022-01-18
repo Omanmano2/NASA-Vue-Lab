@@ -1,17 +1,53 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo" class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+<div class="container-fluid">
+  <form @submit.prevent="grabPictureByDate()">
+      <div class="mb-3 d-flex p-5">
+    <input type="date" class="form-control" id="exampleInputPassword1" v-model="editable">
+    <button class="btn btn-primary">Picture</button>
+      </div>
+  </form>
+  <div class="row">
+    <div class="col-12">
+      <div >
+        <img :src="picture.img" alt="space" class="img-fluid">
+      </div>
+      <span>
+        <p>{{picture.explanation}}</p>
+      </span>
     </div>
   </div>
+</div>
+
 </template>
 
 <script>
+import { computed, ref } from "@vue/reactivity"
+import Pop from "../utils/Pop"
+import { naseService } from "../services/NasaService"
+import { AppState } from "../AppState"
 export default {
-  name: 'Home'
+  setup() {
+    const editable = ref("")
+    return {
+      editable,
+      async grabPictureByDate() {
+        try {
+          await naseService.grabPictureByDate(editable.value)
+        } catch (error) {
+          Pop.toast(error.message, "error")
+          logger.log(error.message)
+        }
+      },
+      picture: computed(()=>
+      AppState.picture
+      )
+
+
+
+
+
+    }
+  }
 }
 </script>
 

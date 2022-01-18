@@ -26,6 +26,9 @@
           <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
             About
           </router-link>
+          <router-link :to="{ name: 'Space Picture' }" class="btn text-success lighten-30 selectable text-uppercase">
+            Space Picture
+          </router-link>
         </li>
       </ul>
       <span class="navbar-text">
